@@ -1,0 +1,19 @@
+.page-header
+  %h1= RightManager::Right.model_name.human(count: 2)
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th= RightManager::Right.human_attribute_name(:name)
+        %th= RightManager::Right.human_attribute_name(:description)
+        %th= RightManager::Group.model_name.human
+        %td
+
+    %tbody
+      - @rights.each do |right|
+        %tr
+          %td= right.name
+          %td= right.description
+          %td= right.group.try(:name)
+          %td= link_to t('view.right_manager.edit'), edit_right_path(right)

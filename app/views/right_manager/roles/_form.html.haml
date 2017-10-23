@@ -1,0 +1,53 @@
+= form_for @role, html: { class: "form-horizontal", role: "form" } do |f|
+  -if @role.errors.any?
+    .alert.alert-danger.alert-dismissable{role: "alert"}
+      %button.close{type: "button", data: {dismiss: "alert"} }
+        %span{aria: {hidden: "true"} } &times;
+        %span.sr-only Close
+      %h4= t("errors.template.header", count: @role.errors.count, model: @role.model_name.human)
+
+      %ul
+        - @role.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :name, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :name, class: 'form-control'
+  .form-group
+    = f.label :description, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_area :description, class: 'form-control'
+
+  .form-group
+    .table-responsive
+      %table.table.table-striped.table-bordered.table-hover
+        %thead
+          %tr
+            %th= RightManager::Right.human_attribute_name(:name)
+            %th= RightManager::RolesRight.human_attribute_name(:access_level)
+
+        %tbody
+          - roles_rights = @role.roles_rights.to_a
+          - current_group = nil
+
+          - RightManager::Right.sorted_by_group.all.each do |right|
+            - roles_right = roles_rights.map{|rr| rr if rr.right_id == right.id}.compact.first
+            = hidden_field_tag "role[roles_rights_attributes][#{right.id}][id]", roles_right.try(:id)
+            = hidden_field_tag "role[roles_rights_attributes][#{right.id}][right_id]", right.id
+            - if current_group != right.group
+              - current_group = right.group
+              %tr
+                %td.text-muted.text-center{colspan: 2}
+                  %strong
+                    = current_group.try(:name)
+
+            %tr{class: (roles_right.try(:access_level) == RightManager::Right::YES ? "success" : "")}
+              %td
+                %span{"data-toggle"=>"tooltip", title: right.description}
+                  = right.name
+              %td= select_tag "role[roles_rights_attributes][#{right.id}][access_level]", options_for_select([[t("view.right_manager.right_value.value_1"), RightManager::Right::YES], [t("view.right_manager.right_value.value_0"), RightManager::Right::NO]], roles_right.try(:access_level) || RightManager::Right::NO), class: ['form-control', 'roles-rights-select']
+
+
+  .form-group
+    = f.submit class: 'btn btn-primary'

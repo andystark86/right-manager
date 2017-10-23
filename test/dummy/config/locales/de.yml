@@ -1,0 +1,6 @@
+de:
+  activerecord:
+     models:
+       person:
+        one: Mitarbeiter
+        other: Mitarbeiter

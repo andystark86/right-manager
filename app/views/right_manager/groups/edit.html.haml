@@ -1,0 +1,8 @@
+.page-header
+  = link_to groups_path, class: 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    = t('view.right_manager.list')
+
+  %h1= RightManager::Group.model_name.human + '-' + t('view.right_manager.edit')
+
+= render 'form'

@@ -1,0 +1,50 @@
+= form_for @user, as: :user, url: user_path(@user), html: { class: "form-horizontal", role: "form" } do |f|
+  -if @user.errors.any?
+    .alert.alert-danger.alert-dismissable{role: "alert"}
+      %button.close{type: "button", data: {dismiss: "alert"} }
+        %span{aria: {hidden: "true"} } &times;
+        %span.sr-only Close
+      %h4= t("errors.template.header", count: @user.errors.count, model: @user.model_name.human)
+
+      %ul
+        - @user.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    .table-responsive
+      %table.table.table-striped.table-bordered.table-hover
+        %thead
+          %tr
+            %th= RightManager::Right.human_attribute_name(:name)
+            %th= t("view.right_manager.access_level_through_user")
+            %th= t("view.right_manager.access_level_through_role", link: link_to(@user.role.try(:name), edit_role_path(@user.role), title: @user.role.try(:description), data: {toggle: "tooltip"})).html_safe
+
+        %tbody
+          - roles_rights = @user.role.roles_rights.to_a
+          - users_rights = @user.users_rights.to_a
+          - current_group = nil
+
+          - RightManager::Right.sorted_by_group.all.each do |right|
+            - roles_right = roles_rights.map{|rr| rr if rr.right_id == right.id}.compact.first
+            - users_right = users_rights.map{|rr| rr if rr.right_id == right.id}.compact.first
+
+            = hidden_field_tag "user[users_rights_attributes][#{right.id}][id]", users_right.try(:id)
+            = hidden_field_tag "user[users_rights_attributes][#{right.id}][right_id]", right.id
+
+            - if current_group != right.group
+              - current_group = right.group
+              %tr
+                %td.text-muted.text-center{colspan: 3}
+                  %strong
+                    = current_group.try(:name)
+
+            %tr
+              %td{class: ["right-name-cell",(@user.can?(right.name) ? "success" : "")]}
+                %span{"data-toggle"=>"tooltip", title: right.description}
+                  = right.name
+              %td{class: [(users_right.try(:access_level) == RightManager::Right::YES ? "success" : "")]}
+                = select_tag "user[users_rights_attributes][#{right.id}][access_level]", options_for_select([[t("view.right_manager.right_value.value_2"), RightManager::Right::ACCESS_OF_ROLE], [t("view.right_manager.right_value.value_1"), RightManager::Right::YES], [t("view.right_manager.right_value.value_0"), RightManager::Right::NO]], users_right.try(:access_level) || RightManager::Right::ACCESS_OF_ROLE), class: ['form-control','users-rights-select']
+              %td{class: [(roles_right.try(:access_level) == RightManager::Right::YES ? "success" : "")], "data-roles-rights-access-level" => roles_right.try(:access_level) || RightManager::Right::NO }
+                = roles_right.try(:access_level) == RightManager::Right::YES ? t("view.right_manager.right_value.value_1") : t("view.right_manager.right_value.value_0")
+  .form-group
+    = f.submit class: 'btn btn-primary'

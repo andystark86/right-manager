@@ -1,0 +1,20 @@
+.page-header
+  %h1= RightManager.user_class.model_name.human(count: 2)
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Name
+        %th= RightManager::Role.model_name.human
+        %th
+
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td= user.right_manager_display_value
+          %td= user.role.try(:name)
+          %td= link_to RightManager::Right.model_name.human(count: 2) + ' ' + t('view.right_manager.edit'), edit_user_path(user)
+
+.text-center
+  = paginate @users, :theme => 'twitter-bootstrap-3'

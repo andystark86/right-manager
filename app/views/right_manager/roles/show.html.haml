@@ -1,0 +1,14 @@
+.page-header
+  = link_to roles_path, class: 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    = t('view.right_manager.list')
+  = link_to edit_role_path(@role), class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-pencil
+    = t('view.right_manager.edit')
+  %h1= RightManager::Role.model_name.human + '-' + t('view.right_manager.show')
+
+%dl.dl-horizontal
+  %dt= RightManager::Role.human_attribute_name(:name)+':'
+  %dd= @role.name
+  %dt= RightManager::Role.human_attribute_name(:description)+':'
+  %dd= @role.description

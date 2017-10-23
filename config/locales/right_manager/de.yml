@@ -1,0 +1,56 @@
+
+de:
+  activerecord:
+     models:
+       right_manager/right:
+        one: Recht
+        other: Rechte
+       right_manager/role:
+        one: Rolle
+        other: Rollen
+       right_manager/group:
+        one: Rechte-Gruppe
+        other: Rechte-Gruppen
+
+     attributes:
+      right_manager/right:
+        name: Recht-Name
+        description: Recht-Beschreibung
+        group: Rechte-Gruppe
+      right_manager/role:
+        name: Rollen-Name
+        description: Rollen-Beschreibung
+      right_manager/group:
+        name: Gruppen-Name
+      right_manager/roles_right:
+        access_level: Zugriff
+      right_manager/users_right:
+        access_level: Zugriff
+
+  flash:
+    created: "%{model} erstellt."
+    updated: "%{model} aktualisiert."
+    destroyed: "%{model} gelöscht."
+
+  view:
+    right_manager:
+      right_value:
+        value_0: Nein
+        value_1: Ja
+        value_2: Recht der Rolle
+      access_level_through_user: "Zugriff durch User"
+      access_level_through_role: "Zugriff durch die Rolle %{link}"
+      new: Neu
+      show: Anzeigen
+      edit: Bearbeiten
+      destroy: Löschen
+      copy: Kopieren
+      list: Liste
+      confirm: "Bist du sicher?"
+      matrix: Matrix
+      user_has_no_role: "Dieser User besitzt keine Rolle. Dadurch können ihm keine Rechte zugewiesen werden."
+
+
+
+
+

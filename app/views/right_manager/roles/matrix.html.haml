@@ -1,0 +1,44 @@
+.page-header
+  = link_to new_role_path, class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    = RightManager::Role.model_name.human + '-' + t('view.right_manager.new')
+  = link_to roles_path, class: 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    = t('view.right_manager.list')
+
+  %h1= RightManager::Role.model_name.human(count: 2) + '-' + t('view.right_manager.matrix')
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover.table-header-rotated
+    %thead
+      %tr
+        %th
+        - @roles.each do |role|
+          %th.rotate-45
+            %div
+              %span
+                = role.name
+
+    %tbody
+      - current_group = nil
+      - columns_count = @roles.size+1
+      - @rights.each do |right|
+
+        - if current_group != right.group
+          - current_group = right.group
+          %tr
+            %td.text-muted.text-center{colspan: columns_count}
+              %strong
+                = current_group.try(:name)
+
+        %tr
+          %td
+            %span{"data-toggle"=>"tooltip", title: right.description}
+              = right.name
+          - @roles.each do |role|
+            - roles_right = role.roles_rights.map{|rr| rr if rr.right_id == right.id}.compact.first
+            - has_access = roles_right.try(:access_level) == RightManager::Right::YES ? true : false
+            - tool_tip = "#{RightManager::Role.model_name.human}: <b>#{role.name}</b><br />#{RightManager::Right.model_name.human}: <b>#{right.name.to_s}</b>".html_safe
+
+            %td{class: (has_access ? "success" : "")}
+              %div.role-matrix-cell.glyphicon{class: [(has_access ? "glyphicon-ok" : "glyphicon-minus")], "data-update-path" => update_single_right_role_path(role), "data-role-id"=> role.id, "data-right-id" => right.id, "data-access-level" => roles_right.try(:access_level), "data-toggle"=>"tooltip", title: tool_tip}

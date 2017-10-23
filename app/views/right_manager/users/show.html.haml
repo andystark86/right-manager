@@ -1,0 +1,12 @@
+.page-header
+  = link_to users_path, class: 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    = t('view.right_manager.list')
+  = link_to edit_user_path(@user), class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-pencil
+    = t('view.right_manager.edit')
+  %h1= RightManager::Right.model_name.human(count: 2)+': ' + @user.right_manager_display_value.to_s
+
+%dl.dl-horizontal
+  %dt Name:
+  %dd= @user.right_manager_display_value

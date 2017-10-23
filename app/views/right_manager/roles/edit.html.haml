@@ -1,0 +1,8 @@
+.page-header
+  = link_to roles_path, class: 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    = t('view.right_manager.list')
+
+  %h1= RightManager::Role.model_name.human + '-' + t('view.right_manager.edit')
+
+= render 'form'

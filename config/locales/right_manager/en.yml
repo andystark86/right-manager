@@ -1,0 +1,56 @@
+
+en:
+  activerecord:
+     models:
+       right_manager/right:
+        one: Right
+        other: Rights
+       right_manager/role:
+        one: Role
+        other: Roles
+       right_manager/group:
+        one: Right-Group
+        other: Right-Groups
+
+     attributes:
+      right_manager/right:
+        name: Right-Name
+        description: Right-Description
+        group: Right-Group
+      right_manager/role:
+        name: Role-Name
+        description: Role-Description
+      right_manager/group:
+        name: Group-Name
+      right_manager/roles_right:
+        access_level: Access
+      right_manager/users_right:
+        access_level: Access
+
+  flash:
+    created: "%{model} created."
+    updated: "%{model} updated."
+    destroyed: "%{model} deleted."
+
+  view:
+    right_manager:
+      right_value:
+        value_0: No
+        value_1: Yes
+        value_2: Access level of role
+      access_level_through_user: "Access of User"
+      access_level_through_role: "Access of Role %{link}"
+      new: New
+      show: Show
+      edit: Edit
+      destroy: Delete
+      copy: Copy
+      list: List
+      confirm: "Are you sure?"
+      matrix: Matrix
+      user_has_no_role: "This User has no role! Without a role you can not configure rights."
+
+
+
+
+

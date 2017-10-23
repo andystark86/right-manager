@@ -1,0 +1,12 @@
+.page-header
+  = link_to groups_path, class: 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    = t('view.right_manager.list')
+  = link_to edit_group_path(@group), class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-pencil
+    = t('view.right_manager.edit')
+  %h1= RightManager::Group.model_name.human + '-' + t('view.right_manager.show')
+
+%dl.dl-horizontal
+  %dt= RightManager::Group.human_attribute_name(:name)+':'
+  %dd= @group.name

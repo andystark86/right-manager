@@ -1,0 +1,21 @@
+.page-header
+  = link_to new_group_path, class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    = RightManager::Group.model_name.human + '-' + t('view.right_manager.new')
+
+  %h1= RightManager::Group.model_name.human(count: 2)
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th= RightManager::Group.human_attribute_name(:name)
+        %th
+        %th
+
+    %tbody
+      - @groups.each do |group|
+        %tr
+          %td= group.name
+          %td= link_to t('view.right_manager.edit'), edit_group_path(group)
+          %td= link_to t('view.right_manager.destroy'), group, data: { confirm: t('view.right_manager.confirm') }, method: :delete
