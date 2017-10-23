@@ -10,17 +10,12 @@ Rails Engine for a database driven access management.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'right_manager'
+gem 'right_manager', git: 'https://github.com/andystark86/right-manager'
 ```
 
 And then execute:
 ```bash
 $ bundle install
-```
-
-Or install it yourself as:
-```bash
-$ gem install right_manager
 ```
 
 Copy and migrate migrations
