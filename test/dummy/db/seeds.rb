@@ -15,6 +15,6 @@ end
 
 # create a few dummy users
 all_roles = RightManager::Role.all
-for i in 1..20 do
+for i in 1..40 do
   Person.create!(first_name: "First #{i}", last_name: "Last #{i}", role: all_roles.shuffle.first)
 end

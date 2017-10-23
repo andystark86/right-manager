@@ -1,4 +1,4 @@
-class CreateRightManagerUsersRights < ActiveRecord::Migration[5.1]
+class CreateRightManagerUsersRights < ActiveRecord::Migration[5.0]
   def change
     create_table :right_manager_users_rights do |t|
       t.integer :user_id, index: true

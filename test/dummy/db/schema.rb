@@ -13,51 +13,51 @@
 ActiveRecord::Schema.define(version: 20171020080855) do
 
   create_table "people", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.integer "access_role_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "first_name"
+    t.string   "last_name"
+    t.integer  "access_role_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "right_manager_groups", force: :cascade do |t|
-    t.string "name"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "right_manager_rights", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.integer "group_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name"
+    t.text     "description"
+    t.integer  "group_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.index ["group_id"], name: "index_right_manager_rights_on_group_id"
   end
 
   create_table "right_manager_roles", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "right_manager_roles_rights", force: :cascade do |t|
-    t.integer "role_id"
-    t.integer "right_id"
-    t.integer "access_level"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "role_id"
+    t.integer  "right_id"
+    t.integer  "access_level"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.index ["right_id"], name: "index_right_manager_roles_rights_on_right_id"
     t.index ["role_id"], name: "index_right_manager_roles_rights_on_role_id"
   end
 
   create_table "right_manager_users_rights", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "right_id"
-    t.integer "access_level"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.integer  "right_id"
+    t.integer  "access_level"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.index ["right_id"], name: "index_right_manager_users_rights_on_right_id"
     t.index ["user_id"], name: "index_right_manager_users_rights_on_user_id"
   end
